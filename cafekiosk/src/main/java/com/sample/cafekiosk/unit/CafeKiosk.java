@@ -45,8 +45,7 @@ public class CafeKiosk {
     }
 
     public Order createOrder(LocalDateTime localDateTime) {
-        LocalDateTime currentDateTime = localDateTime;
-        LocalTime currentTime = currentDateTime.toLocalTime();
+        LocalTime currentTime = localDateTime.toLocalTime();
         if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)) {
             throw new IllegalStateException("주문 시간이 아닙니다. 관리자에게 문의하세요.");
         }
