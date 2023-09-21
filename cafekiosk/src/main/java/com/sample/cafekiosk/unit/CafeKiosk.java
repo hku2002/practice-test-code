@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 public class CafeKiosk {
@@ -25,9 +27,9 @@ public class CafeKiosk {
             throw new IllegalStateException("음료는 1잔 이상 주문하실 수 있습니다.");
         }
 
-        for (int i=0; i<count; i++) {
-            beverages.add(beverage);
-        }
+        beverages.addAll(IntStream.range(0, count)
+                .mapToObj(i -> beverage)
+                .collect(Collectors.toList()));
     }
 
     public void remove(Beverage beverage) {
