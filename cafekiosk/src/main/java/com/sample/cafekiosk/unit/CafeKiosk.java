@@ -2,7 +2,6 @@ package com.sample.cafekiosk.unit;
 
 import com.sample.cafekiosk.unit.order.Order;
 import lombok.Getter;
-import org.aspectj.weaver.ast.Or;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +14,16 @@ public class CafeKiosk {
 
     public void add(Beverage beverage) {
         beverages.add(beverage);
+    }
+
+    public void add(Beverage beverage, int count) {
+        if (count <= 0) {
+            throw new IllegalStateException("음료는 1잔 이상 주문하실 수 있습니다.");
+        }
+
+        for (int i=0; i<count; i++) {
+            beverages.add(beverage);
+        }
     }
 
     public void remove(Beverage beverage) {
