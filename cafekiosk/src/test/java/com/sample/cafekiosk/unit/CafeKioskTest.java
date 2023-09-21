@@ -73,6 +73,20 @@ class CafeKioskTest {
     }
 
     @Test
+    @DisplayName("총 가격 테스트")
+    void calculateTotalPriceTest() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+        cafeKiosk.add(americano);
+        cafeKiosk.add(latte);
+
+        int totalPrice = cafeKiosk.calculateTotalPrice();
+
+        assertThat(totalPrice).isEqualTo(8_500);
+    }
+
+    @Test
     @DisplayName("주문 테스트")
     void createOrderTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
