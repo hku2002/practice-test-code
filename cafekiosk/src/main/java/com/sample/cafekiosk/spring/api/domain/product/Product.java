@@ -4,6 +4,7 @@ import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
 import com.sample.cafekiosk.spring.api.domain.BaseEntity;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,13 @@ public class Product extends BaseEntity {
     private String name;
 
     private int price;
+
+    @Builder
+    public Product(String productNumber, ProductType type, ProductSellingStatus sellingStatus, String name, int price) {
+        this.productNumber = productNumber;
+        this.type = type;
+        this.sellingStatus = sellingStatus;
+        this.name = name;
+        this.price = price;
+    }
 }
