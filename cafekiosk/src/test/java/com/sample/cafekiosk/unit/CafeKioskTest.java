@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CafeKioskTest {
 
     @Test
-    @DisplayName("음료 한개 추가 테스트")
+    @DisplayName("음료 1개를 추가하면 키오스크 주문 목록에 담긴다.")
     void addTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
@@ -24,7 +24,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 여러개 추가 테스트")
+    @DisplayName("음료 여러개 추가하면 키오스크 주문 목록에 모두 담긴다.")
     void addSeveralBeveragesTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -35,7 +35,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 0 추가 테스트")
+    @DisplayName("음료 0 추가하면 예외가 발생하고 사유에 대한 메세지가 발생된다.")
     void addZeroBeveragesTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -46,7 +46,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 한개 삭제 테스트")
+    @DisplayName("음료 1개를 삭제를 하면 키오스크 주문 목록에서 제거된다.")
     void removeTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -58,7 +58,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 전체 삭제 테스트")
+    @DisplayName("음료 전체 삭제를 하면 키오스크 주문 목록에서 모두 제거된다.")
     void clearTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -73,7 +73,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("총 가격 테스트")
+    @DisplayName("총 가격 계산 시 키오스크 주문 목록의 가격을 모두 합한 결과를 반환한다.")
     void calculateTotalPriceTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -87,7 +87,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("주문 테스트")
+    @DisplayName("주문 시 order 목록에 담긴다.")
     void createOrderTest() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
