@@ -63,7 +63,7 @@ class OrderTest {
     }
 
     @Test
-    @DisplayName("주문 생성 시 orderProducts에 저장된다.")
+    @DisplayName("주문 생성 시 orderProducts에 기록한다.")
     void orderProductTest() {
         // given
         List<Product> products = List.of(
