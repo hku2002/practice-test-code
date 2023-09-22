@@ -2,8 +2,6 @@ package com.sample.cafekiosk.spring.api.domain.order;
 
 import com.sample.cafekiosk.spring.api.domain.order.enumtype.OrderStatus;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
-import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
