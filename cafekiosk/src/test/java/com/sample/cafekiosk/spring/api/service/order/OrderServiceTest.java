@@ -6,6 +6,8 @@ import com.sample.cafekiosk.spring.api.domain.orderproduct.OrderProductRepositor
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
+import com.sample.cafekiosk.spring.api.domain.stock.Stock;
+import com.sample.cafekiosk.spring.api.domain.stock.StockRepository;
 import com.sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +20,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus.*;
-import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType.HANDMADE;
+import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.groups.Tuple.tuple;
 
-//@DataJpaTest
 @SpringBootTest
 @ActiveProfiles("test")
 class OrderServiceTest {
@@ -39,8 +41,12 @@ class OrderServiceTest {
     @Autowired
     private OrderProductRepository orderProductRepository;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     @AfterEach
     void tearDown() {
+        stockRepository.deleteAllInBatch();
         orderProductRepository.deleteAllInBatch();
         productRepository.deleteAllInBatch();
         orderRepository.deleteAllInBatch();
@@ -64,7 +70,7 @@ class OrderServiceTest {
         // when
         OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
 
-        //then
+        // then
         assertThat(orderResponse.getId()).isNotNull();
         assertThat(orderResponse)
                 .extracting("registeredDateTime", "totalPrice")
@@ -95,7 +101,7 @@ class OrderServiceTest {
         // when
         OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
 
-        //then
+        // then
         assertThat(orderResponse.getId()).isNotNull();
         assertThat(orderResponse)
                 .extracting("registeredDateTime", "totalPrice")
@@ -106,6 +112,76 @@ class OrderServiceTest {
                         tuple("001", 1000),
                         tuple("001", 1000)
                 );
+    }
+
+    @Test
+    @DisplayName("재고와 관련된 상품이 포함되어 있는 주문번호 리스트를 받아 주문을 생성한다.")
+    void createOrderWithStock() {
+        // given
+        Product product1 = createProduct(BOTTLE, "001", 1000);
+        Product product2 = createProduct(BAKERY, "002", 3000);
+        Product product3 = createProduct(HANDMADE, "003", 5000);
+        productRepository.saveAll(List.of(product1, product2, product3));
+
+        Stock stock1 = Stock.create("001", 2);
+        Stock stock2 = Stock.create("002", 2);
+        stockRepository.saveAll(List.of(stock1, stock2));
+
+        OrderCreateRequest request = OrderCreateRequest.builder()
+                .productNumbers(List.of("001", "001", "002", "003"))
+                .build();
+
+        LocalDateTime registeredDateTime = LocalDateTime.now();
+
+        // when
+        OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
+
+        // then
+        assertThat(orderResponse.getId()).isNotNull();
+        assertThat(orderResponse)
+                .extracting("registeredDateTime", "totalPrice")
+                .contains(registeredDateTime, 10_000);
+        assertThat(orderResponse.getProducts()).hasSize(4)
+                .extracting("productNumber", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("001", 1000),
+                        tuple("001", 1000),
+                        tuple("002", 3000),
+                        tuple("003", 5000)
+                );
+
+        List<Stock> stocks = stockRepository.findAll();
+        assertThat(stocks).hasSize(2)
+                .extracting("productNumber", "quantity")
+                .containsExactlyInAnyOrder(
+                        tuple("001", 0),
+                        tuple("002", 1)
+                );
+    }
+
+    @Test
+    @DisplayName("재고가 부족한 경우 예외 메세지를 발생시켜야 한다.")
+    void createOrderWithNoStockQuantityOutOfStock() {
+        // given
+        Product product1 = createProduct(BOTTLE, "001", 1000);
+        Product product2 = createProduct(BAKERY, "002", 3000);
+        Product product3 = createProduct(HANDMADE, "003", 5000);
+        productRepository.saveAll(List.of(product1, product2, product3));
+
+        Stock stock1 = Stock.create("001", 2);
+        Stock stock2 = Stock.create("002", 2);
+        stockRepository.saveAll(List.of(stock1, stock2));
+
+        OrderCreateRequest request = OrderCreateRequest.builder()
+                .productNumbers(List.of("001", "001", "001", "003"))
+                .build();
+
+        LocalDateTime registeredDateTime = LocalDateTime.now();
+
+        // when / then
+        assertThatThrownBy(() -> orderService.createOrder(request, registeredDateTime))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("재고가 부족한 상품이 있습니다.");
     }
 
     private Product createProduct(ProductType type, String productNumber, int price) {
