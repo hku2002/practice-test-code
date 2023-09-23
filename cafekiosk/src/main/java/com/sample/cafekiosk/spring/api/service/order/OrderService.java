@@ -54,7 +54,7 @@ public class OrderService {
         }
     }
 
-    private static List<String> extractStockProductNumbers(List<Product> products) {
+    private List<String> extractStockProductNumbers(List<Product> products) {
         return products.stream()
                 .filter(product -> ProductType.containsStockManagedType(product.getType()))
                 .map(Product::getProductNumber)
@@ -67,7 +67,7 @@ public class OrderService {
                 .collect(Collectors.toMap(Stock::getProductNumber, s -> s));
     }
 
-    private static Map<String, Long> createCountingMap(List<String> stockProductNumbers) {
+    private Map<String, Long> createCountingMap(List<String> stockProductNumbers) {
         return stockProductNumbers.stream()
                 .collect(Collectors.groupingBy(p -> p, Collectors.counting()));
     }
