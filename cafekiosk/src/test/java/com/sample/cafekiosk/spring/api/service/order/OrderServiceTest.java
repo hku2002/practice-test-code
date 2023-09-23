@@ -24,6 +24,7 @@ import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductTyp
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.groups.Tuple.tuple;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -71,16 +72,21 @@ class OrderServiceTest {
         OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
 
         // then
-        assertThat(orderResponse.getId()).isNotNull();
-        assertThat(orderResponse)
-                .extracting("registeredDateTime", "totalPrice")
-                .contains(registeredDateTime, 4000);
-        assertThat(orderResponse.getProducts()).hasSize(2)
-                .extracting("productNumber", "price")
-                .containsExactlyInAnyOrder(
-                        tuple("001", 1000),
-                        tuple("002", 3000)
-                );
+        assertAll(
+                () -> assertThat(orderResponse.getId()).isNotNull(),
+                () -> assertThat(orderResponse)
+                        .extracting("registeredDateTime", "totalPrice")
+                        .contains(registeredDateTime, 4000),
+                () ->assertThat(orderResponse.getProducts()).hasSize(2)
+                        .extracting("productNumber", "price")
+                        .containsExactlyInAnyOrder(
+                                tuple("001", 1000),
+                                tuple("002", 3000)
+                        )
+        );
+
+
+
     }
 
     @Test
@@ -102,16 +108,21 @@ class OrderServiceTest {
         OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
 
         // then
-        assertThat(orderResponse.getId()).isNotNull();
-        assertThat(orderResponse)
-                .extracting("registeredDateTime", "totalPrice")
-                .contains(registeredDateTime, 2000);
-        assertThat(orderResponse.getProducts()).hasSize(2)
-                .extracting("productNumber", "price")
-                .containsExactlyInAnyOrder(
-                        tuple("001", 1000),
-                        tuple("001", 1000)
-                );
+        assertAll(
+                () -> assertThat(orderResponse.getId()).isNotNull(),
+                () -> assertThat(orderResponse)
+                        .extracting("registeredDateTime", "totalPrice")
+                        .contains(registeredDateTime, 2000),
+                () -> assertThat(orderResponse.getProducts()).hasSize(2)
+                        .extracting("productNumber", "price")
+                        .containsExactlyInAnyOrder(
+                                tuple("001", 1000),
+                                tuple("001", 1000)
+                        )
+        );
+
+
+
     }
 
     @Test
@@ -137,18 +148,20 @@ class OrderServiceTest {
         OrderResponse orderResponse = orderService.createOrder(request, registeredDateTime);
 
         // then
-        assertThat(orderResponse.getId()).isNotNull();
-        assertThat(orderResponse)
-                .extracting("registeredDateTime", "totalPrice")
-                .contains(registeredDateTime, 10_000);
-        assertThat(orderResponse.getProducts()).hasSize(4)
-                .extracting("productNumber", "price")
-                .containsExactlyInAnyOrder(
-                        tuple("001", 1000),
-                        tuple("001", 1000),
-                        tuple("002", 3000),
-                        tuple("003", 5000)
-                );
+        assertAll(
+                () -> assertThat(orderResponse.getId()).isNotNull(),
+                () -> assertThat(orderResponse)
+                        .extracting("registeredDateTime", "totalPrice")
+                        .contains(registeredDateTime, 10_000),
+                () -> assertThat(orderResponse.getProducts()).hasSize(4)
+                        .extracting("productNumber", "price")
+                        .containsExactlyInAnyOrder(
+                                tuple("001", 1000),
+                                tuple("001", 1000),
+                                tuple("002", 3000),
+                                tuple("003", 5000)
+                        )
+        );
 
         List<Stock> stocks = stockRepository.findAll();
         assertThat(stocks).hasSize(2)
