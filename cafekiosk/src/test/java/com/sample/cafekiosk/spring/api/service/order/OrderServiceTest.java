@@ -1,10 +1,13 @@
 package com.sample.cafekiosk.spring.api.service.order;
 
 import com.sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
+import com.sample.cafekiosk.spring.api.domain.order.OrderRepository;
+import com.sample.cafekiosk.spring.api.domain.orderproduct.OrderProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
 import com.sample.cafekiosk.spring.api.service.order.response.OrderResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,19 @@ class OrderServiceTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+
+    @AfterEach
+    void tearDown() {
+        orderProductRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        orderRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("주문번호 리스트를 받아 주문을 생성한다.")
