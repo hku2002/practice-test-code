@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +22,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime registeredDateTime) {
-        List<Product> products = productRepository.findAllByProductNumberIn(request.getProductNumbers());
-        Order order = Order.create(products, registeredDateTime);
+        List<String> productNumbers = request.getProductNumbers();
+        List<Product> products = productRepository.findAllByProductNumberIn(productNumbers);
+
+        Map<String, Product> productMap = products.stream()
+                .collect(Collectors.toMap(Product::getProductNumber, p -> p));
+
+        List<Product> duplicateProducts = productNumbers.stream()
+                .map(productMap::get)
+                .collect(Collectors.toList());
+
+        Order order = Order.create(duplicateProducts, registeredDateTime);
         return OrderResponse.of(orderRepository.save(order));
     }
 }
