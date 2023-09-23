@@ -84,9 +84,6 @@ class OrderServiceTest {
                                 tuple("002", 3000)
                         )
         );
-
-
-
     }
 
     @Test
@@ -120,9 +117,6 @@ class OrderServiceTest {
                                 tuple("001", 1000)
                         )
         );
-
-
-
     }
 
     @Test
