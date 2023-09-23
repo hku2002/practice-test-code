@@ -1,5 +1,6 @@
 package com.sample.cafekiosk.spring.api.service.product;
 
+import com.sample.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
@@ -21,5 +22,11 @@ public class ProductService {
         return products.stream()
                 .map(ProductResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    public void createProduct(ProductCreateRequest request) {
+        // productNumber 생성 (001, 002, 003, 004)
+        // 마지막 상품 번호 + 1
+        String latestProductNumber = productRepository.findLatestProductNumber();
     }
 }
