@@ -23,7 +23,7 @@ public class ProductController {
 
     @PostMapping("/api/v1/products/new")
     public ResponseEntity<BodyResponse<ProductResponse>> createProduct(@RequestBody @Valid ProductCreateRequest request) {
-        return CommonResponse.created(productService.createProduct(request));
+        return CommonResponse.created(productService.createProduct(request.toServiceRequest(request)));
     }
 
     @GetMapping("/api/v1/products/selling")

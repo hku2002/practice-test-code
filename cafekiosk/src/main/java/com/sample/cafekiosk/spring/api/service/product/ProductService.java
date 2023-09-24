@@ -1,9 +1,9 @@
 package com.sample.cafekiosk.spring.api.service.product;
 
-import com.sample.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
+import com.sample.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import com.sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse createProduct(ProductCreateRequest request) {
+    public ProductResponse createProduct(ProductCreateServiceRequest request) {
         // study 이므로 동시성 이슈는 무시
         Product product = request.toEntity(createNextProductNumber());
         return ProductResponse.of(productRepository.save(product));

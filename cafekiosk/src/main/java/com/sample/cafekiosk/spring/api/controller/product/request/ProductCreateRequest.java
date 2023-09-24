@@ -1,8 +1,8 @@
 package com.sample.cafekiosk.spring.api.controller.product.request;
 
-import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
+import com.sample.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,13 +35,13 @@ public class ProductCreateRequest {
         this.price = price;
     }
 
-    public Product toEntity(String nextProductNumber) {
-        return Product.builder()
-                .productNumber(nextProductNumber)
-                .type(type)
-                .sellingStatus(sellingStatus)
-                .name(name)
-                .price(price)
+    public ProductCreateServiceRequest toServiceRequest(ProductCreateRequest request) {
+        return ProductCreateServiceRequest.builder()
+                .type(request.getType())
+                .name(request.getName())
+                .price(request.getPrice())
+                .sellingStatus(request.getSellingStatus())
                 .build();
+
     }
 }

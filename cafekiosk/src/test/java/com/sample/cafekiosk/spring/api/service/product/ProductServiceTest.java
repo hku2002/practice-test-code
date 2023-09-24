@@ -1,10 +1,10 @@
 package com.sample.cafekiosk.spring.api.service.product;
 
-import com.sample.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
+import com.sample.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import com.sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ class ProductServiceTest {
         Product product = createProduct("001", HANDMADE, SELLING, "아메리카노", 4000);
         productRepository.save(product);
 
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .type(HANDMADE)
                 .sellingStatus(SELLING)
                 .name("카푸치노")
@@ -69,7 +69,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("신규 상품 등록 시 상품이 하나도 없다면 상품 등록 번호가 001로 등록된다.")
     void createFirstProduct() {
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .type(HANDMADE)
                 .sellingStatus(SELLING)
                 .name("카푸치노")
