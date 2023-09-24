@@ -38,15 +38,16 @@ class OrderRepositoryTest {
         Product product2 = createProduct("002", HANDMADE, SELLING, "카페모카", 4500);
         productRepository.saveAll(List.of(product1, product2));
 
-        Order order1 = Order.create(List.of(product1, product2), currentDateTime.minusHours(2L).minusSeconds(1L));
+        Order order1 = Order.create(List.of(product1, product2), currentDateTime.minusHours(2L));
         Order order2 = Order.create(List.of(product1, product2), currentDateTime.minusHours(1L));
-        orderRepository.saveAll(List.of(order1, order2));
+        Order order3 = Order.create(List.of(product1, product2), currentDateTime);
+        orderRepository.saveAll(List.of(order1, order2, order3));
 
         // when
         List<Order> orders = orderRepository.findOrdersBy(currentDateTime.minusHours(2L), currentDateTime, INIT);
 
         // then
-        assertThat(orders).hasSize(1)
+        assertThat(orders).hasSize(2)
                 .extracting("orderStatus", "totalPrice")
                 .contains(Tuple.tuple(INIT, 8500));
     }
