@@ -53,7 +53,7 @@ class OrderControllerTest {
     void createOrderWithProductsEmpty() throws Exception {
         // given
         OrderCreateRequest request = OrderCreateRequest.builder()
-                .productNumbers(null)
+                .productNumbers(List.of())
                 .build();
 
         // when / then
