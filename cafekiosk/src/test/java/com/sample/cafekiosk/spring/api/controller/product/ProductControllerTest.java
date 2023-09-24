@@ -158,6 +158,7 @@ class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.status").value("OK"))
-                .andExpect(jsonPath("$.message").value("success"));
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").isArray());
     }
 }
