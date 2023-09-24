@@ -33,4 +33,8 @@ public class BodyResponse<T> {
     public static <T> BodyResponse<T> created(T data) {
         return new BodyResponse<>(HttpStatus.CREATED, HttpStatus.CREATED.name(), data);
     }
+
+    public static <T> BodyResponse<T> fail(HttpStatus status, String message, T data) {
+        return new BodyResponse<>(status, message, data);
+    }
 }
