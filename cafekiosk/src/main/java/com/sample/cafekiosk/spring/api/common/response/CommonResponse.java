@@ -20,6 +20,11 @@ public class CommonResponse {
                 .body(BodyResponse.created(data));
     }
 
+    public static <T> ResponseEntity<BodyResponse<T>> created(URI uri, T data) {
+        return ResponseEntity.created(uri)
+                .body(BodyResponse.created(data));
+    }
+
     public static <T> ResponseEntity<BodyResponse<T>> fail(HttpStatus httpStatus, String message, T data) {
         return ResponseEntity.status(httpStatus)
                 .body(BodyResponse.fail(httpStatus, message, data));
