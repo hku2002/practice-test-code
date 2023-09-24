@@ -1,5 +1,6 @@
-package com.sample.cafekiosk.spring.api.common.response;
+package com.sample.cafekiosk.spring.api.common.exception;
 
+import com.sample.cafekiosk.spring.api.common.response.BodyResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
