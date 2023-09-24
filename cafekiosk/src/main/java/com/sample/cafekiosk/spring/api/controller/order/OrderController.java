@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @RestController
@@ -20,7 +21,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/api/v1/orders/new")
-    public ResponseEntity<BodyResponse<OrderResponse>> createOrder(@RequestBody OrderCreateRequest orderCreateRequest) {
+    public ResponseEntity<BodyResponse<OrderResponse>> createOrder(@RequestBody @Valid OrderCreateRequest orderCreateRequest) {
         return CommonResponse.created(orderService.createOrder(orderCreateRequest, LocalDateTime.now()));
     }
 }
