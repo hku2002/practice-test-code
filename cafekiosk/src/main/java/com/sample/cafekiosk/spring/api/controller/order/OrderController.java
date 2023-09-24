@@ -21,7 +21,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/api/v1/orders/new")
-    public ResponseEntity<BodyResponse<OrderResponse>> createOrder(@RequestBody @Valid OrderCreateRequest orderCreateRequest) {
-        return CommonResponse.created(orderService.createOrder(orderCreateRequest, LocalDateTime.now()));
+    public ResponseEntity<BodyResponse<OrderResponse>> createOrder(@RequestBody @Valid OrderCreateRequest request) {
+        return CommonResponse.created(orderService.createOrder(request.toServiceRequest(request), LocalDateTime.now()));
     }
 }

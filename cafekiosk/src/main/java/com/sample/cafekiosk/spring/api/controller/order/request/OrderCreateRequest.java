@@ -1,5 +1,6 @@
 package com.sample.cafekiosk.spring.api.controller.order.request;
 
+import com.sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,12 @@ public class OrderCreateRequest {
     @Builder
     public OrderCreateRequest(List<String> productNumbers) {
         this.productNumbers = productNumbers;
+    }
+
+    public OrderCreateServiceRequest toServiceRequest(OrderCreateRequest request) {
+        return OrderCreateServiceRequest.builder()
+                .productNumbers(request.getProductNumbers())
+                .build();
     }
 
 }

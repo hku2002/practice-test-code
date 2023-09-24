@@ -1,6 +1,5 @@
 package com.sample.cafekiosk.spring.api.service.order;
 
-import com.sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import com.sample.cafekiosk.spring.api.domain.order.Order;
 import com.sample.cafekiosk.spring.api.domain.order.OrderRepository;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
@@ -8,6 +7,7 @@ import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
 import com.sample.cafekiosk.spring.api.domain.stock.Stock;
 import com.sample.cafekiosk.spring.api.domain.stock.StockRepository;
+import com.sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import com.sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StockRepository stockRepository;
 
-    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime registeredDateTime) {
+    public OrderResponse createOrder(OrderCreateServiceRequest request, LocalDateTime registeredDateTime) {
         List<String> productNumbers = request.getProductNumbers();
         List<Product> products = findDuplicateProducts(productNumbers);
 
