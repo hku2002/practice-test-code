@@ -31,7 +31,7 @@ public class BodyResponse<T> {
     }
 
     public static <T> BodyResponse<T> created(T data) {
-        return new BodyResponse<>(HttpStatus.CREATED, HttpStatus.CREATED.name(), data);
+        return new BodyResponse<>(HttpStatus.CREATED, "success", data);
     }
 
     public static <T> BodyResponse<T> fail(HttpStatus status, String message, T data) {
