@@ -5,8 +5,10 @@ import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingSta
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ProductCreateRequest {
 
     private ProductType type;
