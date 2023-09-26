@@ -1,5 +1,6 @@
 package com.sample.cafekiosk.spring.api.service.order;
 
+import com.sample.cafekiosk.spring.IntegrationTestSupport;
 import com.sample.cafekiosk.spring.api.domain.order.OrderRepository;
 import com.sample.cafekiosk.spring.api.domain.orderproduct.OrderProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
@@ -13,8 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,9 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderService orderService;

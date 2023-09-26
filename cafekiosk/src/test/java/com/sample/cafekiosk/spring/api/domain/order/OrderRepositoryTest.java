@@ -1,5 +1,6 @@
 package com.sample.cafekiosk.spring.api.domain.order;
 
+import com.sample.cafekiosk.spring.IntegrationTestSupport;
 import com.sample.cafekiosk.spring.api.domain.product.Product;
 import com.sample.cafekiosk.spring.api.domain.product.ProductRepository;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
@@ -8,8 +9,6 @@ import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,9 +18,7 @@ import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSel
 import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType.HANDMADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@ActiveProfiles("test")
-class OrderRepositoryTest {
+class OrderRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderRepository orderRepository;

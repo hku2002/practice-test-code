@@ -1,12 +1,11 @@
 package com.sample.cafekiosk.spring.api.domain.product;
 
+import com.sample.cafekiosk.spring.IntegrationTestSupport;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductSellingStatus;
 import com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -15,10 +14,7 @@ import static com.sample.cafekiosk.spring.api.domain.product.enumtype.ProductTyp
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-@DataJpaTest
-@ActiveProfiles("test")
-//@SpringBootTest
-class ProductRepositoryTest {
+class ProductRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;
