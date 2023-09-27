@@ -21,8 +21,8 @@ public class CommonResponse {
         return ResponseEntity.created(URI.create("")).body(DataResponse.created(data));
     }
 
-    public static <T> ResponseEntity<DataResponse<T>> fail(HttpStatus httpStatus, T data) {
-        return ResponseEntity.status(httpStatus).body(DataResponse.fail(httpStatus, data));
+    public static <T> ResponseEntity<DataResponse<T>> fail(HttpStatus httpStatus, String message, T data) {
+        return ResponseEntity.status(httpStatus).body(DataResponse.fail(httpStatus, message, data));
     }
 
 }
