@@ -1,0 +1,11 @@
+### 유저 신규 생성
+POST localhost:8080/v1/users
+Content-Type: application/json
+
+{
+  "name":"홍길동",
+  "phoneNumber":"01012345678",
+  "address":"서울특별시 강남구 강남로 100",
+  "addressDetail":null,
+  "zipCode":"00001"
+}
