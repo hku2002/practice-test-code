@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-
     @Transactional
     public UserResponse createUser(UserCreateRequest request) {
         Address address = request.toAddress(
