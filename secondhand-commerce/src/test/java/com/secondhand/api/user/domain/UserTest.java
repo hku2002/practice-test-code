@@ -19,7 +19,7 @@ class UserTest {
                 .build();
 
         // when
-        User user = User.create("홍길동", "01012341234", address);
+        User user = User.create("hong@sample.com", "1234pass3#", "홍길동", "01012341234", address);
 
         // then
         assertThat(user.getStatus()).isEqualTo(ACTIVE);
