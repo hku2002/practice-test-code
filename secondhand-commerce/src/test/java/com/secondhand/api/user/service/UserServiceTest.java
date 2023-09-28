@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -48,6 +49,32 @@ class UserServiceTest {
                 () -> assertThat(userResponse.getPhoneNumber()).isEqualTo("01012345678"),
                 () -> assertThat(userResponse.getAddress()).isEqualTo("서울특별시 강남구 강남로 100")
         );
+    }
+
+    @Test
+    @DisplayName("신규 유저 생성 시 가입된 email 유저가 있으면 예외를 발생시킨다.")
+    void emailDuplicationTest() {
+        // given
+        UserCreateRequest request = UserCreateRequest.builder()
+                .email("hong@sample.com")
+                .password("test-pass-1234$")
+                .name("홍길동")
+                .phoneNumber("01012345678")
+                .address("서울특별시 강남구 강남로 100")
+                .zipCode("00001")
+                .build();
+        Address address = Address.builder()
+                .address("서울특별시 강남구 강남로 100")
+                .addressDetail("좋은 빌딩 1001호")
+                .zipCode("01000")
+                .build();
+        User user = User.create("hong@sample.com", "test-pass-1234!", "홍길동", "01012345678", address);
+        userRepository.save(user);
+
+        // when // then
+        assertThatThrownBy(() -> userService.createUser(request))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("이미 존재하는 사용자입니다.");
     }
 
     @Test
