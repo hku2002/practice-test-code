@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResponse {
 
+    private String email;
     private String name;
     private String phoneNumber;
     private String address;
@@ -17,7 +18,8 @@ public class UserResponse {
     private String zipCode;
 
     @Builder
-    public UserResponse(String name, String phoneNumber, String address, String addressDetail, String zipCode) {
+    public UserResponse(String email, String name, String phoneNumber, String address, String addressDetail, String zipCode) {
+        this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -27,6 +29,7 @@ public class UserResponse {
 
     public static UserResponse of(User user) {
         return UserResponse.builder()
+                .email(user.getEmail())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
                 .address(user.getAddress().getAddress())

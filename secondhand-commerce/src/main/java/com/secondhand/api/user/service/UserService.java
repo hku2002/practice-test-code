@@ -24,7 +24,7 @@ public class UserService {
                 request.getZipCode()
         );
 
-        User user = User.create(request.getName(), request.getPhoneNumber(), address);
+        User user = User.create(request.getEmail(), request.getPassword(), request.getName(), request.getPhoneNumber(), address);
         return UserResponse.of(userRepository.save(user));
     }
 

@@ -25,6 +25,12 @@ public class User extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "email", nullable = false, length = 200)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
@@ -39,15 +45,19 @@ public class User extends BaseEntity {
     private UserStatus status;
 
     @Builder
-    public User(String name, String phoneNumber, Address address, UserStatus status) {
+    public User(String email, String password, String name, String phoneNumber, Address address, UserStatus status) {
+        this.email = email;
+        this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.status = status;
     }
 
-    public static User create(String name, String phoneNumber, Address address) {
+    public static User create(String email, String password, String name, String phoneNumber, Address address) {
         return User.builder()
+                .email(email)
+                .password(password)
                 .name(name)
                 .phoneNumber(phoneNumber)
                 .address(address)

@@ -8,6 +8,12 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 public class UserCreateRequest {
 
+    @NotEmpty(message = "이메일은 필수 입력값 입니다.")
+    private String email;
+
+    @NotEmpty(message = "비밀번호는 필수 입력값 입니다.")
+    private String password;
+
     @NotEmpty(message = "이름은 필수 입력값입니다.")
     private String name;
 
@@ -22,7 +28,9 @@ public class UserCreateRequest {
     private String zipCode;
 
     @Builder
-    public UserCreateRequest(String name, String phoneNumber, String address, String addressDetail, String zipCode) {
+    public UserCreateRequest(String email, String password, String name, String phoneNumber, String address, String addressDetail, String zipCode) {
+        this.email = email;
+        this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
