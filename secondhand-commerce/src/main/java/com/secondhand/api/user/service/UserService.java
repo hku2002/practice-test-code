@@ -18,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -34,6 +36,9 @@ public class UserService {
                 request.getAddressDetail(),
                 request.getZipCode()
         );
+
+        Optional<User> checkUser = userRepository.findByEmail(request.getEmail());
+        if (checkUser.isPresent()) throw new IllegalStateException("이미 존재하는 사용자입니다.");
 
         User user = User.create(request.getEmail(), request.getPassword(), request.getName(), request.getPhoneNumber(), address);
         return UserResponse.of(userRepository.save(user));
