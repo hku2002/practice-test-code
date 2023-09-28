@@ -3,6 +3,8 @@ POST localhost:8080/v1/users
 Content-Type: application/json
 
 {
+  "email":"hong@sample.com",
+  "password":"pswd-test1234!",
   "name":"홍길동",
   "phoneNumber":"01012345678",
   "address":"서울특별시 강남구 강남로 100",
