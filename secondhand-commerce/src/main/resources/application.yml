@@ -32,6 +32,11 @@ spring:
     console:
       enabled: true
 
+jwt:
+  header: Authorization
+  secret: Y29ubml0LXNlY29uZGhhbmQtdGVzdC1jb2RlLXByYWN0aWNlLWp3dC10b2tlbi1zZWNyZXQtc3ByaW5nLWJvb3Qtand0LXVzaW5nCg==
+  token-validity-in-seconds: 86400
+
 ---
 
 spring:
