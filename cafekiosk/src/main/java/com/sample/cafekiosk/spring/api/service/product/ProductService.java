@@ -23,7 +23,7 @@ public class ProductService {
     public List<ProductResponse> getSellingProducts() {
         List<Product> products = productRepository.findAllBySellingStatusIn(ProductSellingStatus.forDisplay());
         return products.stream()
-                .map(ProductResponse::of)
+                .map(ProductResponse::from)
                 .collect(Collectors.toList());
     }
 
@@ -31,7 +31,7 @@ public class ProductService {
     public ProductResponse createProduct(ProductCreateServiceRequest request) {
         // study 이므로 동시성 이슈는 무시
         Product product = request.toEntity(createNextProductNumber());
-        return ProductResponse.of(productRepository.save(product));
+        return ProductResponse.from(productRepository.save(product));
     }
 
     private String createNextProductNumber() {

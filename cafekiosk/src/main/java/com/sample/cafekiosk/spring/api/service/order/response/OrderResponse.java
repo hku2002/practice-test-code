@@ -25,14 +25,14 @@ public class OrderResponse {
         this.products = products;
     }
 
-    public static OrderResponse of(Order order) {
+    public static OrderResponse from(Order order) {
         return OrderResponse.builder()
                 .id(order.getId())
                 .totalPrice(order.getTotalPrice())
                 .registeredDateTime(order.getRegisteredDateTime())
                 .products(order.getOrderProducts()
                         .stream()
-                        .map(orderProduct -> ProductResponse.of(orderProduct.getProduct()))
+                        .map(orderProduct -> ProductResponse.from(orderProduct.getProduct()))
                         .collect(Collectors.toList())
                 )
                 .build();

@@ -35,7 +35,7 @@ public class OrderService {
         deductStockQuantities(products);
 
         Order order = Order.create(products, registeredDateTime);
-        return OrderResponse.of(orderRepository.save(order));
+        return OrderResponse.from(orderRepository.save(order));
     }
 
     private void deductStockQuantities(List<Product> products) {
