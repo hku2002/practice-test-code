@@ -35,7 +35,4 @@ public class Product {
         this.quantity = quantity;
     }
 
-    @Repository
-    public static interface ProductRepository extends JpaRepository<Product, Long> {
-    }
 }
