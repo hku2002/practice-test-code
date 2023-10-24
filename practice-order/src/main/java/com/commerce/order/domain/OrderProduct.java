@@ -1,5 +1,6 @@
 package com.commerce.order.domain;
 
+import com.commerce.product.domain.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,5 +33,14 @@ public class OrderProduct {
         this.productName = productName;
         this.price = price;
         this.order = order;
+    }
+
+    public static OrderProduct createOrderProduct(Product product, Order order) {
+        return OrderProduct.builder()
+                .productId(product.getId())
+                .productName(product.getProductName())
+                .price(product.getPrice())
+                .order(order)
+                .build();
     }
 }
