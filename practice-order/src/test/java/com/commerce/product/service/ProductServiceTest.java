@@ -67,7 +67,8 @@ class ProductServiceTest {
         productRepository.saveAll(products);
 
         // when / then
-        assertThatThrownBy(() -> productService.findProducts(List.of(3L, 4L)))
+        List<Long> productIds = List.of(3L, 4L);
+        assertThatThrownBy(() -> productService.findProducts(productIds))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상품이 존재하지 않습니다.");
     }
