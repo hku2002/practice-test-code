@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,5 +33,9 @@ public class Product {
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    @Repository
+    public static interface ProductRepository extends JpaRepository<Product, Long> {
     }
 }
