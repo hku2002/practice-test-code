@@ -1,4 +1,4 @@
-package com.commerce.product.entity;
+package com.commerce.product.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
