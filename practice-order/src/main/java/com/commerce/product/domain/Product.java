@@ -4,8 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import javax.persistence.Id;
 
 @Getter
 @Entity
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
@@ -33,6 +33,16 @@ public class Product {
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public void deductionQuantity(int deductionCount) {
+        if (deductionCount < 0) {
+            deductionCount = 0;
+        }
+        if (this.quantity < deductionCount) {
+            throw new IllegalStateException("재고가 존재하지 않습니다.");
+        }
+        this.quantity -= deductionCount;
     }
 
 }
